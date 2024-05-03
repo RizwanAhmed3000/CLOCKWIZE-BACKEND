@@ -36,6 +36,7 @@ residentRoutes.get("/find/:residentId", getResident);
 residentRoutes.get("/searchResident", searchResidents);
 // searchResidentsByName
 
+residentRoutes.get("/find", getAllResidents);
 
 
 export default residentRoutes;
