@@ -20,7 +20,7 @@ const NotesSchema = new Schema(
             type : [String],
         },
         note: {
-            type: String,
+            type: [String],
             required: true
         }
     },
