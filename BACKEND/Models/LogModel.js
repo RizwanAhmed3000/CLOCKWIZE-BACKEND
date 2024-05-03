@@ -28,7 +28,7 @@ const LogSchema = new Schema(
             required: true
         },
         mood: {
-            type: String,
+            type: [String],
         },
     },
     { timestamps: true }
