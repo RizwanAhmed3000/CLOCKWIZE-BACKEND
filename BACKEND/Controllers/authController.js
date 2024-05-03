@@ -23,6 +23,7 @@ export const register = async (req, res, next) => {
             // profileImage: req.body?.profileImage,
             isCareManager: req.body.isCareManager,
             isCarer: req.body.isCarer,
+            isAdmin : req.body.isAdmin
         });
 
 
@@ -32,10 +33,18 @@ export const register = async (req, res, next) => {
 
         //SAVING THE USER
         await newUser.save();
+        let message = "Registration Successful";
+        if (req.body.isAdmin) {
+            message = "Admin registration successful";
+        } else if (req.body.isCareManager) {
+            message = "Care Manager registration successful";
+        } else if (req.body.isCarer) {
+            message = "Carer registration successful";
+        }
 
         res.status(200).send({
             status: "Successful",
-            message: "Registration Successful",
+            message: message,
             data: other,
         });
     } catch (error) {
@@ -47,10 +56,13 @@ export const register = async (req, res, next) => {
 //localhost:8800/api/auth/login
 export async function login(req, res, next) {
     try {
+        
         const user = await User.findOne({ email: req.body.email });
+        console.log(user)
         if (!user) {
+
             // next(404, "User not found")
-            next(createError(404, "User not found"))
+            next(createError(404, `User not found`))  //${message}
             return
         };
         const isCorrect = await bcryptjs.compare(req.body.password, user.password);
@@ -62,9 +74,18 @@ export async function login(req, res, next) {
         const token = jwt.sign({ user }, process.env.JWT, { expiresIn: '24h' });
         const { password, ...other } = user._doc;
 
+        let message = "User sign in successfully";
+        if (user.isAdmin) {
+            message = "Admin sign in successfully";
+        } else if (user.isCareManager) {
+            message = "Care Manager sign in successfully";
+        } else if (user.isCarer) {
+            message = "Carer sign in successfully";
+        }
+
         res.status(200).send({
             status: "Success",
-            message: "User sign in successfully",
+            message: message,
             data: other,
             access_token: token
         });

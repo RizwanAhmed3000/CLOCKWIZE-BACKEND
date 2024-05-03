@@ -111,41 +111,6 @@ export const getAllResidents = async (req, res, next) => {
 
 
 
-// export const searchResidents = async (req, res, next) => {
-//   const {residentName} = req.query
-//   const queryObject = {}
-
-//   if(residentName){
-//     queryObject.residentName = residentName
-//     console.log(queryObject)
-//   }
-
-//   try {
-//     const searchRes = await Resident.find(req.query);
-//     console.log(searchRes);
-
-//     if(!searchRes) {
-//       return
-//       res.status(200).json({
-//         message: "Resident is here",
-//         data: searchRes,
-//       });
-    
-//     } else {
-//       res.status(400).json({
-//         message : "this user is not valid",
-//         status  :"failed"
-//        })
-//     }
-    
-//   } catch (error) {
-//     console.error("Error searching residents:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
-
-
-
 
 export const searchResidents = async (req, res, next) => {
   const { residentName } = req.query;
@@ -181,26 +146,3 @@ export const searchResidents = async (req, res, next) => {
 
 
 
-// residentController.js
-
-// const Resident = require('../models/resident');
-
-// Search residents by name
-// export const searchResidentsByName = async (req, res) => {
-//   try {
-//     const { name } = req.query;
-//     if (!name) {
-//       return res.status(400).json({ error: 'Name parameter is required' });
-//     }
-
-//     // Create Mongoose query to search residents by name
-//     const matchingResidents = await Resident.find({
-//       name: { $regex: new RegExp(name, 'i') } // Case-insensitive search
-//     });
-
-//     res.json({ residents: matchingResidents });
-//   } catch (error) {
-//     console.error('Error searching residents:', error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// };
