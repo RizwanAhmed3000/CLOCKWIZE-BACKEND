@@ -4,11 +4,12 @@ import {
   login,
   forgotPassword,
 } from "../Controllers/authController.js";
+import { verifyToken } from "../Utils/verifyToken.js";
 
 const authRoutes = express.Router();
 
 //localhost:8800/api/auth/signup
-authRoutes.post("/signup", register);
+authRoutes.post("/signup", verifyToken, register);
 
 
 //localhost:8800/api/auth/login

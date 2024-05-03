@@ -10,15 +10,14 @@ import otpRoute from "./Routes/otpRoute.js";
 import familyRoutes from "./Routes/familyRoute.js";
 import logRoute from "./Routes/logRoute.js";
 import notesRoute from "./Routes/NotesRoute.js";
-import fileUpload from "express-fileupload";
+// import fileUpload from "express-fileupload";
 import uploadRoute from "./Routes/uploadRoute.js";
-
-
+import careManagerRoute from "./Routes/CareMangerRoutes.js";
+import adminRoutes from "./Routes/adminRoute.js";
 
 dotenv.config();
 
 const app = express();
-
 
 app.use(express.json());
 app.use(morgan("common"));
@@ -34,6 +33,8 @@ app.use("/api/resident", residentRoutes);
 app.use("/api/family", familyRoutes);
 app.use("/api/log", logRoute);
 app.use("/api/notes", notesRoute);
+app.use("/api/create", careManagerRoute);
+app.use("/api/admin", adminRoutes);
 
 const BackendConnect = () => {
   mongoose
@@ -50,7 +51,6 @@ app.listen(process.env.PORT, () => {
   BackendConnect();
   console.log(`Server listening on this ${process.env.PORT}`);
 });
-
 
 //Error middleware
 app.use((err, req, res, next) => {
@@ -70,7 +70,3 @@ app.use((err, req, res, next) => {
     stack: errorStack,
   });
 });
-
-
-
-

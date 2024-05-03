@@ -1,65 +1,45 @@
 // export const forgetPass = async (req, res, next) => {};
 import nodemailer from "nodemailer"
-import User from "../Models/UserModel.js";
+import Admin from "../Models/AdminModel.js";
 import bcryptjs from "bcryptjs"
 import { createError } from "../Utils/error.js";
 import jwt from "jsonwebtoken"
 
 const { genSalt, hash } = bcryptjs
 
-//=========================== USER REGISTERATON ====================//
+//=========================== Admin REGISTERATON ====================//
 // localhost:8800/api/auth/signup
 export const register = async (req, res, next) => {
-    // console.log(req.user.admin.isAdmin)
-    console.log(req.user.user.isCareManager)
-    // console.log(req.user)
-    if(req.user.admin.isAdmin || req.user.user.isCareManager) {
-        try {
-            //==========HASHING PASSWORD USING BCRYPTJS===================//
-            const salt = await genSalt(12);
-            const hashPassword = await hash(req.body.password, salt);
-    
-    
-            const newUser = new User({
-                username: req.body.username,
-                email: req.body.email,
-                password: hashPassword,
-                // profileImage: req.body?.profileImage,
-                isCareManager: req.body.isCareManager,
-                isCarer: req.body.isCarer,
-                // isAdmin : req.body.isAdmin
-            });
-    
-    
-            //REMOVING CRITICAL INFO FROM THE DATA TO SEND THE RESPONSE
-    
-            const { password, ...other } = newUser._doc;
-    
-            //SAVING THE USER
-            await newUser.save();
-            let message = "Registration Successful";
-            if (req.body.isAdmin) {
-                message = "Admin registration successful";
-            } else if (req.body.isCareManager) {
-                message = "Care Manager registration successful";
-            } else if (req.body.isCarer) {
-                message = "Carer registration successful";
-            }
-    
-            res.status(200).send({
-                status: "Successful",
-                message: message,
-                data: other,
-            });
-        } catch (error) {
-            next(error);
-        }
-    } else {
-        res.status(400).json({
-            message : "you can't create yourself"
-        })
+    try {
+        //==========HASHING PASSWORD USING BCRYPTJS===================//
+        const salt = await genSalt(12);
+        const hashPassword = await hash(req.body.password, salt);
+
+
+        const newAdmin = new Admin({
+            name: req.body.name,
+            email: req.body.email,
+            password: hashPassword,
+           
+        });
+
+
+        //REMOVING CRITICAL INFO FROM THE DATA TO SEND THE RESPONSE
+
+        const { password, ...other } = newAdmin._doc;
+
+        //SAVING THE USER
+        await newAdmin.save();
+        
+
+        res.status(200).send({
+            status: "Successful",
+            message: 'Admin Register successfully',
+            data: other,
+        });
+    } catch (error) {
+        next(error);
     }
-    
 };
 
 //=========================== USER LOGIN ====================//
@@ -67,35 +47,28 @@ export const register = async (req, res, next) => {
 export async function login(req, res, next) {
     try {
         
-        const user = await User.findOne({ email: req.body.email });
-        console.log(user)
-        if (!user) {
+        const admin = await Admin.findOne({ email: req.body.email });
+        console.log(admin)
+        if (!admin) {
 
             // next(404, "User not found")
-            next(createError(404, `User not found`))  //${message}
+            next(createError(404, `Admin not found`))  //${message}
             return
         };
-        const isCorrect = await bcryptjs.compare(req.body.password, user.password);
+        const isCorrect = await bcryptjs.compare(req.body.password, admin.password);
         if (!isCorrect) {
             // next(400, "Incorrect email or password")
             next(createError(400, "Incorrect email or password"))
             return
         };
-        const token = jwt.sign({ user }, process.env.JWT, { expiresIn: '24h' });
-        const { password, ...other } = user._doc;
+        const token = jwt.sign({ admin }, process.env.JWT, { expiresIn: '24h' });
+        const { password, ...other } = admin._doc;
 
-        let message = "User sign in successfully";
-        if (user.isAdmin) {
-            message = "Admin sign in successfully";
-        } else if (user.isCareManager) {
-            message = "Care Manager sign in successfully";
-        } else if (user.isCarer) {
-            message = "Carer sign in successfully";
-        }
+       
 
         res.status(200).send({
             status: "Success",
-            message: message,
+            message: 'Admin Login Successfully',
             data: other,
             access_token: token
         });
