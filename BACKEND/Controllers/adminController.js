@@ -84,10 +84,10 @@ export async function forgotPassword(req, res, next) {
     try {
         const { email } = req.body;
         if (email) {
-            const user = await User.findOne({ email: email })
+            const Admin = await Admin.findOne({ email: email })
             // console.log(user)
             if (user) {
-                const secret = user._id + process.env.JWT
+                const secret = Admin._id + process.env.JWT
                 const token = jwt.sign({ secret }, process.env.JWT, { expiresIn: "30m" })
                 const link = `http:localhost:8800/api/auth/resetpassword/usertoken/${token}`
                 const transport = nodemailer.createTransport({
