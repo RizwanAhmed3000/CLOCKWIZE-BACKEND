@@ -63,8 +63,6 @@ export const deleteNote = async (req, res, next) => {
   }
 };
 
-
-
 //GET ALL RESIDENTS NOTES
 // http://localhost:8800/api/notes/find/:residentId
 // export const getResidentsNotes = async (req, res, next) => {
@@ -87,12 +85,10 @@ export const deleteNote = async (req, res, next) => {
 //   }
 // };
 
-
-
 export const getResidentsNotes = async (req, res, next) => {
   try {
-    const residentId = req.params.residentId
-    console.log(residentId)
+    const residentId = req.params.residentId;
+    console.log(residentId);
     const note = await Notes.find({ residentId: residentId });
     // console.log(log)
     !note &&
