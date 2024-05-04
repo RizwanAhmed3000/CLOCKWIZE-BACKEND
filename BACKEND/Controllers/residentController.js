@@ -109,8 +109,8 @@ export const getAllResidents = async (req, res, next) => {
   }
 };
 
-
-
+//SEARCH RESIDENTS
+// http://localhost:8800/api/resident/search/
 
 export const searchResidents = async (req, res, next) => {
   const { residentName } = req.query;
@@ -125,15 +125,17 @@ export const searchResidents = async (req, res, next) => {
     const searchRes = await Resident.find(queryObject); // Use queryObject instead of req.query
     console.log(searchRes);
 
-    if (searchRes.length > 0) { // Check if searchRes contains any data
+    if (searchRes.length > 0) {
+      // Check if searchRes contains any data
       res.status(200).json({
         message: "Resident found",
         data: searchRes,
       });
     } else {
-      res.status(404).json({ // Change status code to 404 for "Not Found"
+      res.status(404).json({
+        // Change status code to 404 for "Not Found"
         message: "Resident not found",
-        status: "failed"
+        status: "failed",
       });
     }
   } catch (error) {
@@ -141,8 +143,3 @@ export const searchResidents = async (req, res, next) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
-
-
-
-
