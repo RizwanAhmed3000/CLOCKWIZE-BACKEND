@@ -1,7 +1,7 @@
 import Admin from '../Models/AdminModel.js'
 
-// //UPDATE RESIDENT
-// http://localhost:8800/api/resident/660b37d3da1211544662db30
+// //UPDATE ADMIN
+// http://localhost:8800/api/admin/660b37d3da1211544662db30
 export const updateAdmin = async (req, res, next) => {
     try {
       const updateAdmin = await Admin.findByIdAndUpdate(
@@ -36,8 +36,8 @@ export const updateAdmin = async (req, res, next) => {
     }
   };
   
-  // //GET RESIDENT
-  // http://localhost:8800/api/resident/find/660b413793cbd11706eb9a32
+  // //GET ADMIN
+  // http://localhost:8800/api/admin/find/660b413793cbd11706eb9a32
   
   export const getAdmin = async (req, res, next) => {
     try {
@@ -57,14 +57,14 @@ export const updateAdmin = async (req, res, next) => {
     }
   };
   
-  //GET ALL RESIDENTS
-  // http://localhost:8800/api/resident/find/
+  //GET ALL Admins
+  // http://localhost:8800/api/admin/getAllAdmins/
   export const getAllAdmin = async (req, res, next) => {
     try {
-      // Database query to retrieve all residents
+      // Database query to retrieve all Admin
       const allAdmins = await Admin.find();
   
-      // Sending the retrieved residents as response
+      // Sending the retrieved Admins as response
       res.status(200).json({
         status: "Success",
         message: "All Admins retrieved successfully",
@@ -82,37 +82,6 @@ export const updateAdmin = async (req, res, next) => {
   };
   
   
-  
-  
-//   export const searchResidents = async (req, res, next) => {
-//     const { residentName } = req.query;
-//     const queryObject = {};
-  
-//     if (residentName) {
-//       queryObject.residentName = residentName;
-//       console.log(queryObject);
-//     }
-  
-//     try {
-//       const searchRes = await Resident.find(queryObject); // Use queryObject instead of req.query
-//       console.log(searchRes);
-  
-//       if (searchRes.length > 0) { // Check if searchRes contains any data
-//         res.status(200).json({
-//           message: "Resident found",
-//           data: searchRes,
-//         });
-//       } else {
-//         res.status(404).json({ // Change status code to 404 for "Not Found"
-//           message: "Resident not found",
-//           status: "failed"
-//         });
-//       }
-//     } catch (error) {
-//       console.error("Error searching residents:", error);
-//       res.status(500).json({ error: "Internal server error" });
-//     }
-//   };
   
   
   
