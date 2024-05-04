@@ -13,7 +13,7 @@ const NotesSchema = new Schema(
         RAGRating: {
             type: String
         },
-        prescriptions: {
+        professinalsName: {
             type: String
         },
         Emotions: {
