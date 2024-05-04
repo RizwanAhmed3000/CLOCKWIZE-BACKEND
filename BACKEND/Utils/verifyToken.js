@@ -12,7 +12,7 @@ export const verifyToken = (req, res, next) => {
             return next(createError(403, "Invaild token!!"))
         }
         req.user = user
-        // console.log(req.user.user, "====>>>> req.user")
+        // console.log(req.user, "====>>>> req.user from token")
         next();
     })
 }
