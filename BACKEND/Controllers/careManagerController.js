@@ -1,45 +1,75 @@
-import user from "../Models/UserModel.js";
+// import user from "../Models/UserModel.js";
 
-// CREATE CARE MANAGER BY ADMIN
-export const createCareManger = async (req, res, next) => {
-//   console.log(req.user, "request");
-  // console.log(req.user.user , ' request.user.user');
-  if (req.user.user.isAdmin) {
-    //req.user.user.isAdmin
-    const newCareManager = new user({
-      ...req.body,
-      isCareManager: req.body.isCareManager,
-      isCarer: req.body.isCarer,
-      //   createdBy: req.user._id,
-    });
-    try {
-      const saveCareManager = await newCareManager.save();
-      res.status(200).send({
-        status: "Successful",
-        message: "care Manager create Successfully",
-        data: saveCareManager,
+// // SEARCH CARE MANAGER BY QUERY
+// export const searchCareManager = async (req, res, next) => {
+//   console.log(req.query)
+//   const { isCareManager } = req.query;
+//   console.log(isCareManager)
+//   const queryObject = {};
+//   console.log(queryObject)
+
+
+//   if (isCareManager) {
+//     queryObject.isCareManager = isCareManager;
+//     console.log(queryObject);
+//   }
+
+//   try {
+//     const CareManagers = await user.find(queryObject); // Use queryObject instead of req.query
+//     console.log(CareManagers);
+
+//     if (CareManagers.length > 0) { // Check if searchRes contains any data
+//       res.status(200).json({
+//         message: "Care Manager found",
+//         data: CareManagers,
+//       });
+//     } else {
+//       res.status(404).json({ // Change status code to 404 for "Not Found"
+//         message: "Care Managers not found",
+//         status: "failed"
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error searching Care Managers:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+
+import User from "../Models/UserModel.js";
+
+// SEARCH CARE MANAGER BY QUERY
+export const searchCareManager = async (req, res, next) => {
+  const { isCareManager, isCarer } = req.query;
+
+  const queryObject = {};
+
+  // Convert isCareManager and isCarer to boolean values
+  const isCM = isCareManager === 'true';
+  const isCR = isCarer === 'true';
+
+  // Check if isCareManager or isCarer is requested
+  if (isCM) {
+    queryObject.isCareManager = isCM;
+  } else if (isCR) {
+    queryObject.isCarer = isCR;
+  }
+
+  try {
+    const users = await User.find(queryObject);
+
+    if (users.length > 0) {
+      res.status(200).json({
+        message: "Users found",
+        data: users,
       });
-    } catch (error) {
-      next(error);
+    } else {
+      res.status(404).json({
+        message: "Users not found",
+      });
     }
-  } else {
-    res.status(401).send({
-      status: "failed",
-      message: "You are not admin",
-    });
+  } catch (error) {
+    console.error("Error searching users:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
-
-// Middleware function to check if the user is an admin
-// const isAdmin = (req, res, next) => {
-//     if (!req.user || !req.user.isAdmin) {
-//       return res.status(403).json({ message: "Only admins can perform this action" });
-//     }
-//     next();
-//   };
-
-//   // Route for creating a care manager
-//   app.post("/api/care-managers", isAdmin, async (req, res) => {
-//     // Only admins can reach this point
-//     // Your code to create a care manager goes here
-//   });

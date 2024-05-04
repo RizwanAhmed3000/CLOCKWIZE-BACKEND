@@ -34,7 +34,7 @@ app.use("/api/resident", residentRoutes);
 app.use("/api/family", familyRoutes);
 app.use("/api/log", logRoute);
 app.use("/api/notes", notesRoute);
-app.use("/api/create", careManagerRoute);
+app.use("/api/search", careManagerRoute);
 app.use("/api/admin", adminRoutes);
 app.use("/api/playlist", playlistRoute);
 

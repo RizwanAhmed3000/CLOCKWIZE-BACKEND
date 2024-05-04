@@ -2,25 +2,61 @@ import Admin from '../Models/AdminModel.js'
 
 // //UPDATE ADMIN
 // http://localhost:8800/api/admin/660b37d3da1211544662db30
-export const updateAdmin = async (req, res, next) => {
-    try {
-      const updateAdmin = await Admin.findByIdAndUpdate(
-        req.params.adminId,
-        {
-          $set: req.body,
-        },
-        { new: true }
-      );
-      res.status(200).send({
-        status: "Successful",
-        message: "Admin Updated Successfully",
-        data: updateAdmin,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
+// export const updateAdmin = async (req, res, next) => {
+//     try {
+//       const updateAdmin = await Admin.findByIdAndUpdate(
+//         req.params.adminId,
+//         {
+//           $set: req.body,
+//         },
+//         { new: true }
+//       );
+//       res.status(200).send({
+//         status: "Successful",
+//         message: "Admin Updated Successfully",
+//         data: updateAdmin,
+//       });
+//     } catch (error) {
+//       next(error);
+//     }
+//   };
   
+import bcrypt from "bcryptjs";
+
+export const updateAdmin = async (req, res, next) => {
+  try {
+    // Check if password update is requested
+    if (req.body.password) {
+      // Hash the new password
+      const salt = await bcrypt.genSalt(12);
+      const hashPassword = await bcrypt.hash(req.body.password, salt);
+      req.body.password = hashPassword;
+    }
+
+    // Update the admin
+    const updatedAdmin = await Admin.findByIdAndUpdate(
+      req.params.adminId,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+
+    // Remove password field from the response
+    const { password, ...adminData } = updatedAdmin._doc;
+
+    res.status(200).send({
+      status: "Successful",
+      message: "Admin Updated Successfully",
+      data: adminData,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
   // //DELETE ADMIN
   // http://localhost:8800/api/admin/delete/:adminID
   
