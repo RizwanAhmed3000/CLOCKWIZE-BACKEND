@@ -14,6 +14,7 @@ import notesRoute from "./Routes/NotesRoute.js";
 import uploadRoute from "./Routes/uploadRoute.js";
 import careManagerRoute from "./Routes/CareMangerRoutes.js";
 import adminRoutes from "./Routes/adminRoute.js";
+import playlistRoute from "./Routes/playlistRoute.js";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use("/api/log", logRoute);
 app.use("/api/notes", notesRoute);
 app.use("/api/create", careManagerRoute);
 app.use("/api/admin", adminRoutes);
+app.use("/api/playlist", playlistRoute);
 
 const BackendConnect = () => {
   mongoose
