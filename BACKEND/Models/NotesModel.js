@@ -13,14 +13,18 @@ const NotesSchema = new Schema(
         RAGRating: {
             type: String
         },
-        text: {
+        professinalsName: {
             type: String
         },
         Emotions: {
-            type : [String],
+            type: [String],
         },
         note: {
             type: [String],
+            required: true
+        },
+        date: {
+            type: String,
             required: true
         }
     },
