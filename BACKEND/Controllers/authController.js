@@ -11,15 +11,15 @@ const { genSalt, hash } = bcryptjs
 // localhost:8800/api/auth/signup
 export const register = async (req, res, next) => {
     // console.log(req.user.admin.isAdmin)
-    console.log(req.user.user.isCareManager)
-    // console.log(req.user)
-    if(req.user.admin.isAdmin || req.user.user.isCareManager) {
+    // console.log(req.user.user.isCareManager, "===>>>> from controller")
+    // console.log(req.user.admin, "===>>>> from controller")
+    if (req.user?.admin || req.user?.user.isCareManager) {
         try {
             //==========HASHING PASSWORD USING BCRYPTJS===================//
             const salt = await genSalt(12);
             const hashPassword = await hash(req.body.password, salt);
-    
-    
+
+
             const newUser = new User({
                 username: req.body.username,
                 email: req.body.email,
@@ -29,23 +29,23 @@ export const register = async (req, res, next) => {
                 isCarer: req.body.isCarer,
                 // isAdmin : req.body.isAdmin
             });
-    
-    
+
+
             //REMOVING CRITICAL INFO FROM THE DATA TO SEND THE RESPONSE
-    
+
             const { password, ...other } = newUser._doc;
-    
+
             //SAVING THE USER
             await newUser.save();
             let message = "Registration Successful";
-            if (req.body.isAdmin) {
-                message = "Admin registration successful";
-            } else if (req.body.isCareManager) {
-                message = "Care Manager registration successful";
-            } else if (req.body.isCarer) {
-                message = "Carer registration successful";
-            }
-    
+            // if (req.body.isAdmin) {
+            //     message = "Admin registration successful";
+            // } else if (req.body.isCareManager) {
+            //     message = "Care Manager registration successful";
+            // } else if (req.body.isCarer) {
+            //     message = "Carer registration successful";
+            // }
+
             res.status(200).send({
                 status: "Successful",
                 message: message,
@@ -56,17 +56,17 @@ export const register = async (req, res, next) => {
         }
     } else {
         res.status(400).json({
-            message : "you can't create yourself"
+            message: "you are not authorized for this"
         })
     }
-    
+
 };
 
 //=========================== USER LOGIN ====================//
 //localhost:8800/api/auth/login
 export async function login(req, res, next) {
     try {
-        
+
         const user = await User.findOne({ email: req.body.email });
         console.log(user)
         if (!user) {
