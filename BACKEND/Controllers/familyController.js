@@ -2,11 +2,8 @@
 import Family from "../Models/FamilyModel.js";
 import Resident from "../Models/ResidentModel.js";
 
-
-
 //====================  NEW FAMILY =========================//
 // http://localhost:8800/api/family/
-
 
 export const createFamilyMember = async (req, res, next) => {
   try {
@@ -103,4 +100,3 @@ export const getFamilyMember = async (req, res, next) => {
     next(error);
   }
 };
-

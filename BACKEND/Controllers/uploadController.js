@@ -11,15 +11,14 @@ export const uploadImages = async (req, res, next) => {
     // console.log(file);
 
     fs.readdirSync("uploads/").forEach((file) => {
-      console.log(file);                            // public_id: "olympic_flag"
+      console.log(file); // public_id: "olympic_flag"
       // cloudinary.uploader.upload(`uploads/${file}`, {  }, (error, result) => console.log(result , 'result')
       //   // console.log(error , 'error')
-        
-        
+
       // );
       cloudinary.v2.uploader.upload(`uploads/${file}`, {}, (error, result) => {
-        console.log(result, 'result');
-        console.log('error', error);
+        console.log(result, "result");
+        console.log("error", error);
       });
     });
 
