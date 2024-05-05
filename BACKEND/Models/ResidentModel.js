@@ -27,7 +27,7 @@ const ResidentSchema = new Schema(
     career: {
       type: String,
     },
-    playlist: {
+    playlistLink: {
       type: [String],
     },
     artist: {
