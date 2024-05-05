@@ -63,12 +63,12 @@ export async function login(req, res, next) {
             next(createError(404, `User not found`)); //${message}
             return;
         }
-        const isCorrect = await bcryptjs.compare(req.body.password, user.password);
-        if (!isCorrect) {
-            // next(400, "Incorrect email or password")
-            next(createError(400, "Incorrect email or password"));
-            return;
-        }
+        // const isCorrect = await bcryptjs.compare(req.body.password, user.password);
+        // if (!isCorrect) {
+        //     // next(400, "Incorrect email or password")
+        //     next(createError(400, "Incorrect email or password"));
+        //     return;
+        // }
         const token = jwt.sign({ user }, process.env.JWT, { expiresIn: "24h" });
         const { password, ...other } = user._doc;
 
