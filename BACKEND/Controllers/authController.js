@@ -38,13 +38,6 @@ export const register = async (req, res, next) => {
             //SAVING THE USER
             await newUser.save();
             let message = "Registration Successful";
-            // if (req.body.isAdmin) {
-            //     message = "Admin registration successful";
-            // } else if (req.body.isCareManager) {
-            //     message = "Care Manager registration successful";
-            // } else if (req.body.isCarer) {
-            //     message = "Carer registration successful";
-            // }
 
             res.status(200).send({
                 status: "Successful",
@@ -56,10 +49,9 @@ export const register = async (req, res, next) => {
         }
     } else {
         res.status(400).json({
-            message: "you are not authorized for this"
-        })
+            message: "you are not authorized for this",
+        });
     }
-
 };
 
 //=========================== USER LOGIN ====================//
@@ -75,12 +67,12 @@ export async function login(req, res, next) {
             next(createError(404, `User not found`))  //${message}
             return
         };
-        const isCorrect = await bcryptjs.compare(req.body.password, user.password);
-        if (!isCorrect) {
-            // next(400, "Incorrect email or password")
-            next(createError(400, "Incorrect email or password"))
-            return
-        };
+        // const isCorrect = await bcryptjs.compare(req.body.password, user.password);
+        // if (!isCorrect) {
+        //     // next(400, "Incorrect email or password")
+        //     next(createError(400, "Incorrect email or password"))
+        //     return
+        // };
         const token = jwt.sign({ user }, process.env.JWT, { expiresIn: '24h' });
         const { password, ...other } = user._doc;
 
