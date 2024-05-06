@@ -15,15 +15,6 @@ export const createAlbum = async (req, res, next) => {
     // Save the new family member to the database
     const saveAlbum = await newAlbum.save();
     console.log(saveAlbum)
-    // const { _id } = saveAlbum;
-    // console.log(_id);
-
-    // await photos.updateOne(
-    //   { _id: req.params.residentId },
-    //   {
-    //     $push: { residentId: _id },
-    //   }
-    // );
 
     res.status(200).send({
       status: "Successful",
@@ -93,25 +84,25 @@ export const getAlbum = async (req, res, next) => {
 };
 
 //GET ALL RESIDENTS
-// http://localhost:8800/api/resident/find/
-// export const getAllResidents = async (req, res, next) => {
-//   try {
-//     // Database query to retrieve all residents
-//     const residents = await photos.find();
+// http://localhost:8800/api/album/findAllAlbums/
+export const getAllAlbum = async (req, res, next) => {
+  try {
+    // Database query to retrieve all Albums
+    const allAlbums = await photos.find();
 
-//     // Sending the retrieved residents as response
-//     res.status(200).json({
-//       status: "Success",
-//       message: "All residents retrieved successfully",
-//       data: residents,
-//     });
-//   } catch (error) {
-//     // Handling errors
-//     console.error("Error while retrieving residents:", error);
-//     res.status(500).json({
-//       status: "Error",
-//       message: "Failed to retrieve residents",
-//       error: error.message,
-//     });
-//   }
-// };
+    // Sending the retrieved residents as response
+    res.status(200).json({
+      status: "Success",
+      message: "All Albums retrieved successfully",
+      data: allAlbums,
+    });
+  } catch (error) {
+    // Handling errors
+    console.error("Error while retrieving Albums:", error);
+    res.status(500).json({
+      status: "Error",
+      message: "Failed to retrieve Albums",
+      error: error.message,
+    });
+  }
+};
