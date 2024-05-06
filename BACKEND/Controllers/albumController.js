@@ -3,38 +3,37 @@ import photos from "../Models/PhotosModel.js";
 //====================  NEW ALBUM =========================//
 // http://localhost:8800/api/album/
 export const createAlbum = async (req, res, next) => {
-    try {
-      const residentId = req.params.residentId; // Get the resident ID from request parameters
-  
-      // Create a new Family object with the resident ID from the request parameters
-      const newAlbum = new photos({
-        ...req.body,
-        residentId: residentId, // Set the residentId property of the Photo object
-      });
-  
-      // Save the new album to the database
-      const saveAlbum = await newAlbum.save();
-      // console.log(saveFamily)
-      const { _id } = saveAlbum;
-      console.log(_id);
-  
-      await photos.updateOne(
-        { _id: req.params.residentId },
-        {
-          $push: { residentId: _id },
-        }
-      );
-  
-      res.status(200).send({
-        status: "Successful",
-        message: "Album Added Successfully",
-        data: saveAlbum,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
-// };
+  try {
+    const residentId = req.params.residentId; // Get the resident ID from request parameters
+
+    // Create a new Family object with the resident ID from the request parameters
+    const newAlbum = new photos({
+      ...req.body,
+      residentId: residentId, // Set the residentId property of the Family object
+    });
+
+    // Save the new family member to the database
+    const saveAlbum = await newAlbum.save();
+    // console.log(saveFamily)
+    const { _id } = saveAlbum;
+    console.log(_id);
+
+    await photos.updateOne(
+      { _id: req.params.residentId },
+      {
+        $push: { residentId: _id },
+      }
+    );
+
+    res.status(200).send({
+      status: "Successful",
+      message: "Album Added Successfully",
+      data: saveAlbum,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 // //UPDATE ALBUM
 // http://localhost:8800/api/album/update/660b37d3da1211544662db30
