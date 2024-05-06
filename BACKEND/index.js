@@ -15,6 +15,7 @@ import careManagerRoute from "./Routes/CareMangerRoutes.js";
 import adminRoutes from "./Routes/adminRoute.js";
 import playlistRoute from "./Routes/playlistRoute.js";
 import albumRoutes from "./Routes/albumRoute.js";
+import perfectDayRoutes from "./Routes/perfectDayRoute.js";
 // import fileUpload from "express-fileupload";
 
 dotenv.config();
@@ -29,16 +30,17 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(fileUpload({ useTempFiles: true }));
 
 app.use("/api/auth", authRoutes);
-app.use("/api/upload", uploadRoute);
+app.use("/api/admin", adminRoutes);
 app.use("/api/otp", otpRoute);
 app.use("/api/resident", residentRoutes);
+app.use("/api/upload", uploadRoute);
 app.use("/api/family", familyRoutes);
 app.use("/api/log", logRoute);
 app.use("/api/notes", notesRoute);
 app.use("/api/search", careManagerRoute);
-app.use("/api/admin", adminRoutes);
 app.use("/api/playlist", playlistRoute);
 app.use("/api/album", albumRoutes);
+app.use("/api/perfectDay", perfectDayRoutes);
 
 const BackendConnect = () => {
   mongoose
