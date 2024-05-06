@@ -10,11 +10,12 @@ import otpRoute from "./Routes/otpRoute.js";
 import familyRoutes from "./Routes/familyRoute.js";
 import logRoute from "./Routes/logRoute.js";
 import notesRoute from "./Routes/NotesRoute.js";
-// import fileUpload from "express-fileupload";
 import uploadRoute from "./Routes/uploadRoute.js";
 import careManagerRoute from "./Routes/CareMangerRoutes.js";
 import adminRoutes from "./Routes/adminRoute.js";
 import playlistRoute from "./Routes/playlistRoute.js";
+import albumRoutes from "./Routes/albumRoute.js";
+// import fileUpload from "express-fileupload";
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use("/api/notes", notesRoute);
 app.use("/api/search", careManagerRoute);
 app.use("/api/admin", adminRoutes);
 app.use("/api/playlist", playlistRoute);
+app.use("/api/album", albumRoutes);
 
 const BackendConnect = () => {
   mongoose
