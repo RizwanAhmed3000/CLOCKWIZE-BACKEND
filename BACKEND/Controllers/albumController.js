@@ -1,6 +1,6 @@
 import photos from "../Models/PhotosModel.js";
 
-//====================  NEW RESIDENT =========================//
+//====================  NEW ALBUM =========================//
 // http://localhost:8800/api/album/
 export const createAlbum = async (req, res, next) => {
   try {
@@ -34,14 +34,13 @@ export const createAlbum = async (req, res, next) => {
     next(error);
   }
 };
-// };
 
-// //UPDATE RESIDENT
-// http://localhost:8800/api/resident/660b37d3da1211544662db30
-export const updateResident = async (req, res, next) => {
+// //UPDATE ALBUM
+// http://localhost:8800/api/album/update/660b37d3da1211544662db30
+export const updateAlbum = async (req, res, next) => {
   try {
-    const updateResident = await photos.findByIdAndUpdate(
-      req.params.residentId,
+    const updateAlbum = await photos.findByIdAndUpdate(
+      req.params.albumId,
       {
         $set: req.body,
       },
@@ -49,8 +48,8 @@ export const updateResident = async (req, res, next) => {
     );
     res.status(200).send({
       status: "Successful",
-      message: "Resident Updated Successfully",
-      data: updateResident,
+      message: "Album Updated Successfully",
+      data: updateAlbum,
     });
   } catch (error) {
     next(error);
@@ -58,35 +57,35 @@ export const updateResident = async (req, res, next) => {
 };
 
 // //DELETE RESIDENT
-// http://localhost:8800/api/resident/660b37d3da1211544662db30
+// http://localhost:8800/api/album/delete/660b37d3da1211544662db30
 
-// export const deleteResident = async (req, res, next) => {
-//   try {
-//     await photos.findByIdAndDelete(req.params.residentId);
-//     res.status(200).send({
-//       status: "Successful",
-//       message: "Resident deleted Successfully",
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-// //GET RESIDENT
-// http://localhost:8800/api/resident/find/660b413793cbd11706eb9a32
-
-export const getResident = async (req, res, next) => {
+export const deleteAlbum = async (req, res, next) => {
   try {
-    const resident = await photos.findById(req.params.residentId);
-    !resident &&
+    await photos.findByIdAndDelete(req.params.albumId);
+    res.status(200).send({
+      status: "Successful",
+      message: "Album deleted Successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// //GET ALBUM
+// http://localhost:8800/api/album/find/660b413793cbd11706eb9a32
+
+export const getAlbum = async (req, res, next) => {
+  try {
+    const album = await photos.findById(req.params.albumId);
+    !album &&
       res.status(404).send({
         status: "Failed",
-        message: "Resident not found",
+        message: "Album not found",
       });
     res.status(200).send({
       status: "Successful",
-      message: "Resident Found",
-      data: resident,
+      message: "Album Found",
+      data: album,
     });
   } catch (error) {
     next(error);
