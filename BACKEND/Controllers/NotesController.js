@@ -10,13 +10,6 @@ export const createNote = async (req, res, next) => {
     const saveNote = await newNotes.save();
 
     const { _id } = saveNote;
-    // console.log(_id);
-    await Notes.updateOne(
-      { _id: req.params.residentId },
-      {
-        $push: { residentId: _id },
-      }
-    );
     res.status(200).send({
       status: "Successful",
       message: " Note Added Successfully",

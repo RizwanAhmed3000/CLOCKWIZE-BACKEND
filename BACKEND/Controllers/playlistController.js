@@ -14,14 +14,8 @@ export const createPlaylists = async (req, res, next) => {
     const savePlaylist = await newPlaylist.save();
     // console.log(saveFamily)
     const { _id } = savePlaylist;
-    console.log(_id);
+    // console.log(_id);
 
-    await Playlists.updateOne(
-      { _id: req.params.residentId },
-      {
-        $push: { residentId: _id },
-      }
-    );
 
     res.status(200).send({
       status: "Successful",
