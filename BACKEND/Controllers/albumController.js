@@ -14,16 +14,16 @@ export const createAlbum = async (req, res, next) => {
 
     // Save the new family member to the database
     const saveAlbum = await newAlbum.save();
-    // console.log(saveFamily)
-    const { _id } = saveAlbum;
-    console.log(_id);
+    console.log(saveAlbum)
+    // const { _id } = saveAlbum;
+    // console.log(_id);
 
-    await photos.updateOne(
-      { _id: req.params.residentId },
-      {
-        $push: { residentId: _id },
-      }
-    );
+    // await photos.updateOne(
+    //   { _id: req.params.residentId },
+    //   {
+    //     $push: { residentId: _id },
+    //   }
+    // );
 
     res.status(200).send({
       status: "Successful",
