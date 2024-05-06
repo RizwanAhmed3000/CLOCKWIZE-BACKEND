@@ -66,17 +66,17 @@ export const uploadImages = async (req, res, next) => {
         }
         const { url } = result;
 
-        // Create a new photo document and push the URL into the photos array
-        try {
-          const newPhoto = new PhotoModel({
-            photos: [url], // Assuming you want to store a single URL for each photo document
-            albumName: 'New Folder', // You can change this default value if needed
-          });
-          await newPhoto.save();
-          console.log("Image URL saved to MongoDB:", url);
-        } catch (error) {
-          console.error("Error saving image URL to MongoDB:", error);
-        }
+        // // Create a new photo document and push the URL into the photos array
+        // try {
+        //   const newPhoto = new PhotoModel({
+        //     photos: [url], // Assuming you want to store a single URL for each photo document
+        //     albumName: 'New Folder', // You can change this default value if needed
+        //   });
+        //   await newPhoto.save();
+        //   console.log("Image URL saved to MongoDB:", url);
+        // } catch (error) {
+        //   console.error("Error saving image URL to MongoDB:", error);
+        // }
 
         fs.remove(`uploads/${file}`, (err) => {
           if (err) return console.error(err);
