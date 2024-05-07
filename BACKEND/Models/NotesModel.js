@@ -26,6 +26,10 @@ const NotesSchema = new Schema(
         date: {
             type: String,
             // required: true
+        },
+        reviewDate: {
+            type: String,
+            // required: true
         }
     },
     { timestamps: true }
