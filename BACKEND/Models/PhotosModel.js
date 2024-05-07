@@ -11,7 +11,7 @@ const photosSchema = new Schema(
             type: [String],
         },
         albumName: {
-            type: [String],
+            type: String,
             default : 'New Folder'
         },
        
