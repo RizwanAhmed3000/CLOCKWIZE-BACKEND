@@ -8,7 +8,7 @@ const PlaylistSchema = new Schema(
       required: true,
     },
     playlistLink: {
-      type: [String],
+      type: String,
     },
     playlistName: {
       type: String,
