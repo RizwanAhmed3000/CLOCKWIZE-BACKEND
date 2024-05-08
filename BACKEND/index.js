@@ -21,7 +21,7 @@ import perfectDayRoutes from "./Routes/perfectDayRoute.js";
 dotenv.config();
 
 const app = express();
-
+const PORT = process.env.PORT || 6000;
 app.use(express.json());
 app.use(morgan("common"));
 app.use(cors());
@@ -42,6 +42,13 @@ app.use("/api/playlist", playlistRoute);
 app.use("/api/album", albumRoutes);
 app.use("/api/perfectDay", perfectDayRoutes);
 
+// SERVER LISTENING ON THE PORT
+app.listen(PORT, () => {
+  BackendConnect();
+  console.log(`Server listening on this ${process.env.PORT}`);
+});
+
+
 const BackendConnect = () => {
   mongoose
     .connect(process.env.MONGO)
@@ -53,10 +60,6 @@ const BackendConnect = () => {
     });
 };
 
-app.listen(process.env.PORT, () => {
-  BackendConnect();
-  console.log(`Server listening on this ${process.env.PORT}`);
-});
 
 //Error middleware
 app.use((err, req, res, next) => {

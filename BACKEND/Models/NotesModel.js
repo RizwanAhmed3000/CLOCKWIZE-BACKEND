@@ -8,10 +8,10 @@ const NotesSchema = new Schema(
             required: true,
         },
         type: {
-            type: String
+            type: String // doctor, dentist, optition
         },
         RAGRating: {
-            type: String
+            type: String // red, amber, green
         },
         professionalName: {
             type: String
