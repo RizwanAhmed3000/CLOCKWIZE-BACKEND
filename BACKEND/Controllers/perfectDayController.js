@@ -83,7 +83,7 @@ export const deletePerfectDay = async (req, res, next) => {
 // http://localhost:8000/api/perfectDay/find
   export const getAllPerfectDay = async (req,res,next) => {
     try {
-      const allPerfectDays = await PerfectDayModel.find()
+      const allPerfectDays = await PerfectDayModel.find({ residentId: req.params.residentId })
       res.status(200).json({
         status : 'Success',
         message : 'All Perfect Day Found Successfully',

@@ -26,3 +26,21 @@ export const createPlaylists = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getResidentPlaylist = async (req, res, next) => {
+  try {
+    const playlist = await Playlists.find({ residentId: req.params.residentId });
+    !playlist &&
+      res.status(404).send({
+        status: "Failed",
+        message: "Playlist not found",
+      });
+    res.status(200).send({
+      status: "Successful",
+      message: "Playist Found",
+      data: playlist,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
