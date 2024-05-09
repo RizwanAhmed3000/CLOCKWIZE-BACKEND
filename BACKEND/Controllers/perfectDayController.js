@@ -84,11 +84,16 @@ export const deletePerfectDay = async (req, res, next) => {
   export const getAllPerfectDay = async (req,res,next) => {
     try {
       const allPerfectDays = await PerfectDayModel.find({ residentId: req.params.residentId })
-      res.status(200).json({
-        status : 'Success',
-        message : 'All Perfect Day Found Successfully',
-        data : allPerfectDays
-      })
+      !allPerfectDays &&
+        res.status(404).send({
+          status: "Failed",
+          message: "Perfect Day not found",
+        });
+      res.status(200).send({
+        status: "Successful",
+        message: "Perfect Day Found",
+        data: allPerfectDays,
+      });
     } catch (error) {
       next(error)
     }
