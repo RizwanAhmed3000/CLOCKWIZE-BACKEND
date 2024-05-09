@@ -28,6 +28,6 @@ perfectDayRoutes.get("/find/:perfectDayId", getPerfectDay);
 
 //======================= GET ALL PERFECT DAY ======================//
 //localhost:8000/api/perfectDay/find
-perfectDayRoutes.get("/find/:residentId", getAllPerfectDay);
+perfectDayRoutes.get("/:residentId", getAllPerfectDay);
 
 export default perfectDayRoutes;
