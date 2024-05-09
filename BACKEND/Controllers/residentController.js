@@ -122,8 +122,10 @@ export const searchResidents = async (req, res, next) => {
   }
 
   try {
-    const searchRes = await Resident.find({ residentName: { $regex: residentName, $options: "i" } }).limit(40); // Use queryObject instead of req.query
-    
+    const searchRes = await Resident.find({
+      residentName: { $regex: residentName, $options: "i" },
+    }).limit(40); // Use queryObject instead of req.query
+
     // const searchRes = await Resident.find(queryObject); // Use queryObject instead of req.query
     console.log(searchRes);
 
