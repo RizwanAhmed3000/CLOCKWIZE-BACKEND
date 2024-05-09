@@ -98,3 +98,108 @@ export const getResidentsNotes = async (req, res, next) => {
     next(error);
   }
 };
+
+
+
+
+// export const searchNotesTypesAndRatings = async (req, res, next) => {
+//   const { type, RAGRating } = req.query;
+//   console.log(req.query, 'req.query ========>');
+//   const queryObject = {};
+//   console.log(type, 'type ======>');
+//   console.log(RAGRating, 'RAGRating ======>');
+
+//   if (type !== undefined) {
+//     queryObject.type = { $regex: type, $options: "i" }; // Use regex for case-insensitive partial matching
+//   }
+//   if (RAGRating !== undefined) {
+//     queryObject.RAGRating = RAGRating;
+//   }
+
+//   console.log("Query Object:", queryObject); // Log the query object before executing the query
+
+//   try {
+//     if (Object.keys(queryObject).length === 0) {
+//       // If queryObject is empty, no search parameters were provided
+//       return res.status(400).json({
+//         message: "No search parameters provided",
+//         status: "failed",
+//       });
+//     }
+
+//     const searchRes = await Notes.find(queryObject).limit(40); // Use queryObject to filter the search
+
+//     console.log("Search result:", searchRes);
+
+//     if (searchRes.length > 0) {
+//       res.status(200).json({
+//         message: "Notes found",
+//         data: searchRes,
+//       });
+//     } else {
+//       res.status(404).json({
+//         message: "Notes not found",
+//         status: "failed",
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error searching notes:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+
+
+
+
+
+
+
+
+
+export const searchNotesTypesAndRatings = async (req, res, next) => {
+  const { type, RAGRating } = req.query;
+  const queryObject = {};
+
+  if (type !== undefined) {
+    queryObject.type = { $regex: `^${type}`, $options: "i" }; // Match if the string starts with 'type'
+  }
+  if (RAGRating !== undefined) {
+    // Match if the string starts with the provided RAGRating and is followed by any characters
+    const regex = new RegExp(`^${RAGRating}\\d*`, "i");
+    queryObject.RAGRating = { $regex: regex };
+  }
+
+  console.log("Query Object:", queryObject); // Log the query object before executing the query
+
+  try {
+    if (Object.keys(queryObject).length === 0) {
+      // If queryObject is empty, no search parameters were provided
+      return res.status(400).json({
+        message: "No search parameters provided",
+        status: "failed",
+      });
+    }
+
+    const searchRes = await Notes.find(queryObject).limit(40); // Use queryObject to filter the search
+
+    console.log("Search result:", searchRes);
+
+    if (searchRes.length > 0) {
+      res.status(200).json({
+        message: "Notes found",
+        data: searchRes,
+      });
+    } else {
+      res.status(404).json({
+        message: "Notes not found",
+        status: "failed",
+      });
+    }
+  } catch (error) {
+    console.error("Error searching notes:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
