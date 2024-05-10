@@ -7,12 +7,12 @@ import {
 
 const peopleTagsRoute = express.Router();
 
-//localhost:8000/api/admin/signup
+//localhost:8000/api/people/
 peopleTagsRoute.post("/", createPeopleTags);
 
 
 
-//localhost:8000/api/admin/getAllAdmin
+//localhost:8000/api/people/tags/find
 peopleTagsRoute.get("/tags/find", getAllPeopleTags);
 
 export default peopleTagsRoute;
