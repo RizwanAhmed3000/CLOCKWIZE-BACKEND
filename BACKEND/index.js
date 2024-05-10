@@ -19,6 +19,7 @@ import perfectDayRoutes from "./Routes/perfectDayRoute.js";
 import peopleTagsRoute from "./Routes/peopleTagsRoute.js";
 import environmentTagsRoute from "./Routes/EnvironmentRoute.js";
 import activityTagsRoute from "./Routes/ActivityRoute.js";
+import emotionTagsRoute from "./Routes/emotionRoute.js";
 // import fileUpload from "express-fileupload";
 
 dotenv.config();
@@ -47,12 +48,16 @@ app.use("/api/perfectDay", perfectDayRoutes);
 app.use("/api/people/", peopleTagsRoute);
 app.use("/api/environment/", environmentTagsRoute);
 app.use("/api/activity/", activityTagsRoute);
+app.use("/api/emotion/", emotionTagsRoute);
+
+
 
 // SERVER LISTENING ON THE PORT
 app.listen(PORT, () => {
   BackendConnect();
   console.log(`Server listening on this ${process.env.PORT}`);
 });
+
 
 
 const BackendConnect = () => {
