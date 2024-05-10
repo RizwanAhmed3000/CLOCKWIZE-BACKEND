@@ -16,6 +16,7 @@ import adminRoutes from "./Routes/adminRoute.js";
 import playlistRoute from "./Routes/playlistRoute.js";
 import albumRoutes from "./Routes/albumRoute.js";
 import perfectDayRoutes from "./Routes/perfectDayRoute.js";
+import peopleTagsRoute from "./Routes/peopleTagsRoute.js";
 // import fileUpload from "express-fileupload";
 
 dotenv.config();
@@ -41,6 +42,7 @@ app.use("/api/search", careManagerRoute);
 app.use("/api/playlist", playlistRoute);
 app.use("/api/album", albumRoutes);
 app.use("/api/perfectDay", perfectDayRoutes);
+app.use("/api/people/", peopleTagsRoute);
 
 // SERVER LISTENING ON THE PORT
 app.listen(PORT, () => {
