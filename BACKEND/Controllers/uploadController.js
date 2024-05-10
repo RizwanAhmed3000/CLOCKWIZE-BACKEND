@@ -57,6 +57,36 @@ export const uploadImages = async (req, res, next) => {
 
 // MULTIPLE IMAGES UPLOAD
 // http://localhost:8000/api/upload/multipleImages
+// export const MultipleUploadImages = async (req, res, next) => {
+//   try {
+//     const images = req.files;
+//     console.log(images);
+//     const imageUrls = [];
+
+//     for (const image of images) {
+//       const result = await cloudinary.uploader.upload(image.path, {
+//         resource_type: "auto",
+//       });
+//       const { secure_url } = result;
+//       imageUrls.push(secure_url);
+//     }
+
+//     req.images = imageUrls;
+//     res
+//       .status(200)
+//       .json({ message: "Images uploaded successfully", imageUrls });
+//   } catch (error) {
+//     res.status(500).send({
+//       message: "Internal server Error",
+//       error,
+//       status: "Unsuccessful",
+//     });
+//   }
+// };
+
+
+
+
 export const MultipleUploadImages = async (req, res, next) => {
   try {
     const images = req.files;
@@ -69,14 +99,21 @@ export const MultipleUploadImages = async (req, res, next) => {
       });
       const { secure_url } = result;
       imageUrls.push(secure_url);
+
+      // Remove uploaded image from local directory
+      fs.remove(image.path, (err) => {
+        if (err) {
+          console.error("Error removing image from directory:", err);
+        } else {
+          console.log("Image removed from directory:", image.path);
+        }
+      });
     }
 
-    req.images = imageUrls;
-    res
-      .status(200)
-      .json({ message: "Images uploaded successfully", imageUrls });
+    res.status(200).json({ message: "Images uploaded successfully", imageUrls });
   } catch (error) {
-    res.status(500).send({
+    console.error("Error uploading images:", error);
+    res.status(500).json({
       message: "Internal server Error",
       error,
       status: "Unsuccessful",
