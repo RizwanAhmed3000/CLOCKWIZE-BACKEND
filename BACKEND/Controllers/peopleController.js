@@ -22,10 +22,10 @@ export const createPeopleTags = async (req, res, next) => {
 // getAllPeopleTags
 export const getAllPeopleTags = async (req, res, next) => {
   try {
-    // Database query to retrieve all Albums
+    // Database query to retrieve all Peoples
     const allPeopleTags = await PeopleTagsModel.find();
 
-    // Sending the retrieved residents as response
+    // Sending the retrieved Poeples as response
     res.status(200).json({
       status: "Success",
       message: "All peoples tags retrieved successfully",
