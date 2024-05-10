@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import cloudinary from "cloudinary";
 import dotenv from "dotenv";
-// import PhotoModel from "../Models/PhotosModel.js"; // Import your photo model
+import PhotoModel from "../Models/PhotosModel.js"; // Import your photo model
 
 dotenv.config();
 
@@ -25,11 +25,10 @@ export const uploadImages = async (req, res, next) => {
           }
           const { url } = result;
 
-          // // Create a new photo document and push the URL into the photos array
+          // Create a new photo document and push the URL into the photos array
           // try {
           //   const newPhoto = new PhotoModel({
           //     photos: [url], // Assuming you want to store a single URL for each photo document
-          //     albumName: 'New Folder', // You can change this default value if needed
           //   });
           //   await newPhoto.save();
           //   console.log("Image URL saved to MongoDB:", url);
@@ -57,36 +56,6 @@ export const uploadImages = async (req, res, next) => {
 
 // MULTIPLE IMAGES UPLOAD
 // http://localhost:8000/api/upload/multipleImages
-// export const MultipleUploadImages = async (req, res, next) => {
-//   try {
-//     const images = req.files;
-//     console.log(images);
-//     const imageUrls = [];
-
-//     for (const image of images) {
-//       const result = await cloudinary.uploader.upload(image.path, {
-//         resource_type: "auto",
-//       });
-//       const { secure_url } = result;
-//       imageUrls.push(secure_url);
-//     }
-
-//     req.images = imageUrls;
-//     res
-//       .status(200)
-//       .json({ message: "Images uploaded successfully", imageUrls });
-//   } catch (error) {
-//     res.status(500).send({
-//       message: "Internal server Error",
-//       error,
-//       status: "Unsuccessful",
-//     });
-//   }
-// };
-
-
-
-
 export const MultipleUploadImages = async (req, res, next) => {
   try {
     const images = req.files;
