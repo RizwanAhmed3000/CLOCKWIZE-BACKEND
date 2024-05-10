@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import cloudinary from "cloudinary";
 import dotenv from "dotenv";
-// import PhotoModel from "../Models/PhotosModel.js"; // Import your photo model
+import PhotoModel from "../Models/PhotosModel.js"; // Import your photo model
 
 dotenv.config();
 
@@ -25,11 +25,10 @@ export const uploadImages = async (req, res, next) => {
           }
           const { url } = result;
 
-          // // Create a new photo document and push the URL into the photos array
+          // Create a new photo document and push the URL into the photos array
           // try {
           //   const newPhoto = new PhotoModel({
           //     photos: [url], // Assuming you want to store a single URL for each photo document
-          //     albumName: 'New Folder', // You can change this default value if needed
           //   });
           //   await newPhoto.save();
           //   console.log("Image URL saved to MongoDB:", url);
@@ -69,14 +68,21 @@ export const MultipleUploadImages = async (req, res, next) => {
       });
       const { secure_url } = result;
       imageUrls.push(secure_url);
+
+      // Remove uploaded image from local directory
+      fs.remove(image.path, (err) => {
+        if (err) {
+          console.error("Error removing image from directory:", err);
+        } else {
+          console.log("Image removed from directory:", image.path);
+        }
+      });
     }
 
-    req.images = imageUrls;
-    res
-      .status(200)
-      .json({ message: "Images uploaded successfully", imageUrls });
+    res.status(200).json({ message: "Images uploaded successfully", imageUrls });
   } catch (error) {
-    res.status(500).send({
+    console.error("Error uploading images:", error);
+    res.status(500).json({
       message: "Internal server Error",
       error,
       status: "Unsuccessful",
