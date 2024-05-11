@@ -44,13 +44,17 @@ export const uploadImages = async (req, res, next) => {
           res.status(200).send({
             status: "success",
             message: "image Uploaded",
-            result: url,
+            result: result,
           });
         }
       );
     });
   } catch (error) {
     console.log(error);
+    res.status(500).send({
+      status: "failed",
+      message: "image not Uploaded",
+    });
   }
 };
 
