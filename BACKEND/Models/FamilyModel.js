@@ -11,7 +11,7 @@ const FamilySchema = new Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     relationship: { type: String, required: true },
-    photos: { type: [String] },
+    photo: { type: String },
   },
   { timestamps: true }
 );
