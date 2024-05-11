@@ -27,15 +27,10 @@ const ResidentSchema = new Schema(
     career: {
       type: String,
     },
-    playlistLink: {
+    photos: {
       type: [String],
     },
-    artist: {
-      type: [String],
-    },
-    genre: {
-      type: [String],
-    },
+    
     roomNo: {
       type: Number,
     },
