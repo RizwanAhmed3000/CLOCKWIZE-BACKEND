@@ -83,7 +83,7 @@ export const MultipleUploadImages = async (req, res, next) => {
       });
     }
 
-    res.status(200).json({ message: "Images uploaded successfully", imageUrls });
+    res.status(200).json({ status: "Successfull", message: "Images uploaded successfully", imageUrls });
   } catch (error) {
     console.error("Error uploading images:", error);
     res.status(500).json({

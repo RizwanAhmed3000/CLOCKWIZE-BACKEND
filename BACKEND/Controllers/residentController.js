@@ -32,18 +32,34 @@ export const createResident = async (req, res, next) => {
 // http://localhost:8800/api/resident/660b37d3da1211544662db30
 export const updateResident = async (req, res, next) => {
   try {
-    const updateResident = await Resident.findByIdAndUpdate(
-      req.params.residentId,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).send({
-      status: "Successful",
-      message: "Resident Updated Successfully",
-      data: updateResident,
-    });
+    if (req.body.photos) {
+      const updateResident = await Resident.findByIdAndUpdate(
+        req.params.residentId,
+        {
+          $push: { photos: [...req.body.photos] },
+          // $set: req.body
+        },
+        { new: true }
+      );
+      res.status(200).send({
+        status: "Successful",
+        message: "Resident Updated Successfully",
+        data: updateResident,
+      });
+    } else {
+      const updateResident = await Resident.findByIdAndUpdate(
+        req.params.residentId,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      );
+      res.status(200).send({
+        status: "Successful",
+        message: "Resident Updated Successfully",
+        data: updateResident,
+      });
+    }
   } catch (error) {
     next(error);
   }
