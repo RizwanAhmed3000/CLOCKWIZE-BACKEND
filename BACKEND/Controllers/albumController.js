@@ -88,7 +88,7 @@ export const getAlbum = async (req, res, next) => {
 export const getAllAlbum = async (req, res, next) => {
   try {
     // Database query to retrieve all Albums
-    const allAlbums = await photos.find();
+    const allAlbums = await photos.find({ residentId: req.params.residentId });
 
     // Sending the retrieved residents as response
     res.status(200).json({

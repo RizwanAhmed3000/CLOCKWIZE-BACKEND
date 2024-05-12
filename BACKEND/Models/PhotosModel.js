@@ -12,9 +12,9 @@ const photosSchema = new Schema(
         },
         albumName: {
             type: String,
-            default : 'New Folder'
+            default: 'New Folder'
         },
-       
+
     },
     { timestamps: true }
 );
