@@ -22,5 +22,5 @@ albumRoutes.delete("/delete/:albumId", deleteAlbum);
 albumRoutes.get("/find/:albumId", getAlbum);
 
 //localhost:8800/api/album/findAll/:albumId
-albumRoutes.get("/findAllAlbums", getAllAlbum);
+albumRoutes.get("/:residentId", getAllAlbum);
 export default albumRoutes;
