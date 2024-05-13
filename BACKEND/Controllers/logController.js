@@ -62,22 +62,48 @@ export const deleteLog = async (req, res, next) => {
 
 //GET ALL RESIDENTS LOG
 // http://localhost:8800/api/log/find/:residentId
+// export const getResidentsLog = async (req, res, next) => {
+//   try {
+//     const residentId = req.params.residentId;
+//     // console.log(residentId)
+//     const log = await LogModel.find({ residentId: residentId });
+//     // console.log(log)
+//     !log &&
+//       res.status(404).send({
+//         status: "Failed",
+//         message: "Resident Logs not found",
+//       });
+//     res.status(200).send({
+//       status: "Successful",
+//       message: "Resident Logs Found",
+//       data: log,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+
+
+
 export const getResidentsLog = async (req, res, next) => {
   try {
     const residentId = req.params.residentId;
-    // console.log(residentId)
-    const log = await LogModel.find({ residentId: residentId });
-    // console.log(log)
-    !log &&
+    const date = req.query.date; // Get date from query parameters
+    const log = await LogModel.find({ residentId: residentId, date: date }); // Query logs for the specified date
+    
+    if (!log || log.length === 0) {
       res.status(404).send({
         status: "Failed",
-        message: "Resident Logs not found",
+        message: "Resident Logs not found for the specified date",
       });
-    res.status(200).send({
-      status: "Successful",
-      message: "Resident Logs Found",
-      data: log,
-    });
+    } else {
+      res.status(200).send({
+        status: "Successful",
+        message: "Resident Logs Found",
+        data: log,
+      });
+    }
   } catch (error) {
     next(error);
   }
