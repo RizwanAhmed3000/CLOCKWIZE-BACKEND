@@ -20,10 +20,9 @@ import peopleTagsRoute from "./Routes/peopleTagsRoute.js";
 import environmentTagsRoute from "./Routes/EnvironmentRoute.js";
 import activityTagsRoute from "./Routes/ActivityRoute.js";
 import emotionTagsRoute from "./Routes/emotionRoute.js";
-// import fileUpload from "express-fileupload";
 
 dotenv.config();
-
+const MONGO = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.oahrmzf.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
 const app = express();
 const PORT = process.env.PORT || 6000;
 app.use(express.json());
@@ -31,7 +30,6 @@ app.use(morgan("common"));
 app.use(cors());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
-// app.use(fileUpload({ useTempFiles: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
@@ -50,19 +48,15 @@ app.use("/api/environment/", environmentTagsRoute);
 app.use("/api/activity/", activityTagsRoute);
 app.use("/api/emotion/", emotionTagsRoute);
 
-
-
 // SERVER LISTENING ON THE PORT
 app.listen(PORT, () => {
   BackendConnect();
   console.log(`Server listening on this ${process.env.PORT}`);
 });
 
-
-
 const BackendConnect = () => {
   mongoose
-    .connect(process.env.MONGO)
+    .connect(MONGO)
     .then(() => {
       console.log("BackEnd Connected");
     })
@@ -70,7 +64,6 @@ const BackendConnect = () => {
       throw error;
     });
 };
-
 
 //Error middleware
 app.use((err, req, res, next) => {
