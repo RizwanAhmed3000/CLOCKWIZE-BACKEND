@@ -12,37 +12,74 @@ cloudinary.v2.config({
 });
 
 export const uploadImages = async (req, res, next) => {
+  // try {
+  //   fs.readdirSync("uploads/").forEach((file) => {
+  //     cloudinary.v2.uploader.upload(
+  //       `uploads/${file}`,
+  //       {},
+  //       async (error, result) => {
+  //         if (error) {
+  //           return res.status(400).json({
+  //             message: error,
+  //           });
+  //         } else {
+  //           res.status(200).send({
+  //             status: "success",
+  //             message: "image Uploaded",
+  //             result: result,
+  //           });
+  //         }
+
+  //         fs.remove(`uploads/${file}`, (err) => {
+  //           if (err) return console.error(err);
+  //           console.log("success");
+  //         });
+
+  //       }
+  //     );
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  //   res.status(500).send({
+  //     status: "failed",
+  //     message: "image not Uploaded",
+  //   });
+  // }
   try {
-    fs.readdirSync("uploads/").forEach((file) => {
-      cloudinary.v2.uploader.upload(
-        `uploads/${file}`,
-        {},
-        async (error, result) => {
+    const uploadedResults = []; // Array to store upload results
+
+    // Read files from uploads directory synchronously
+    const files = fs.readdirSync("uploads/");
+
+    // Process each file asynchronously
+    for (const file of files) {
+      // Upload file to cloudinary
+      const result = await new Promise((resolve, reject) => {
+        cloudinary.v2.uploader.upload(`uploads/${file}`, {}, (error, result) => {
           if (error) {
-            return res.status(400).json({
-              message: error,
-            });
+            reject(error); // Reject promise if upload fails
           } else {
-            res.status(200).send({
-              status: "success",
-              message: "image Uploaded",
-              result: result,
-            });
+            resolve(result); // Resolve promise with upload result
           }
+        });
+      });
 
-          fs.remove(`uploads/${file}`, (err) => {
-            if (err) return console.error(err);
-            console.log("success");
-          });
+      uploadedResults.push(result); // Store upload result
+      fs.removeSync(`uploads/${file}`); // Remove file after upload
+    }
 
-        }
-      );
+    // Send response after all files have been processed
+    res.status(200).json({
+      status: "success",
+      message: "Images Uploaded",
+      results: uploadedResults
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
+    console.error(error);
+    res.status(500).json({
       status: "failed",
-      message: "image not Uploaded",
+      message: "Images not Uploaded",
+      error: error.message // Send error message in response
     });
   }
 };
