@@ -28,6 +28,6 @@ const EmotionWheelSchema = new Schema(
     { timestamps: true }
 );
 
-export default mongoose.model("emotion", EmotionWheelSchema);
+export default mongoose.model("EmotionWheel", EmotionWheelSchema);
 
 
