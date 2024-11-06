@@ -21,6 +21,7 @@ import environmentTagsRoute from "./Routes/EnvironmentRoute.js";
 import activityTagsRoute from "./Routes/ActivityRoute.js";
 import emotionTagsRoute from "./Routes/emotionRoute.js";
 import emotionWheelRoute from "./Routes/emotionWheelRoute.js";
+import interestRoute from "./Routes/InterestRoute.js";
 
 dotenv.config();
 const MONGO = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.oahrmzf.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
@@ -49,6 +50,7 @@ app.use("/api/people/", peopleTagsRoute);
 app.use("/api/environment/", environmentTagsRoute);
 app.use("/api/activity/", activityTagsRoute);
 app.use("/api/emotion/", emotionTagsRoute);
+app.use("/api/interest/", interestRoute);
 
 // SERVER LISTENING ON THE PORT
 app.listen(PORT, () => {
